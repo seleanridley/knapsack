@@ -18,13 +18,12 @@ using namespace std;
 
 void exhaustiveKnapsack(knapsack& k, int timeLimit) {
     stack<int> currSubset;
-    int bestSubsetSize = 0;
+    stack<int> bestSet;
     int bestValue = 0;
     
     //exhaustively check all 2^n subsets
     for (int x = 0; x < (1 << k.getNumObjects()); x++) {
         //cost and value of each subset
-        int subsetSize = 0;
         int totalCost = 0;
         int totalValue = 0;
         
@@ -33,23 +32,31 @@ void exhaustiveKnapsack(knapsack& k, int timeLimit) {
             if (((x >> y) & 1) == 1) {
                 totalCost += k.getCost(y);
                 totalValue += k.getValue(y);
+                
+                cout << y << " ";
                 currSubset.push(y);
-                subsetSize++;
             }
         }
         
         //check if subset's cost is within limit and value is better than already found
         if ((totalCost <= k.getCostLimit()) && (totalValue > bestValue)) {
             bestValue = totalValue;
-            bestSubsetSize = subsetSize;
-        } else {
-            for (int i = 0; i < subsetSize; i++) currSubset.pop();
+            
+            while(!bestSet.empty()) bestSet.pop();
+            while(!currSubset.empty()) {
+                bestSet.push(currSubset.top());
+                currSubset.pop();
+            }
         }
+        
+        while(!currSubset.empty()) currSubset.pop();
+        
+        cout << endl;
     }
     
-    for (int i = 0; i < bestSubsetSize; i++) {
-        k.select(currSubset.top());
-        currSubset.pop();
+    while (!bestSet.empty()) {
+        k.select(bestSet.top());
+        bestSet.pop();
     }
 }
 
@@ -63,7 +70,7 @@ int main()
     // Read the name of the file from the keyboard or
     // hard code it here for testing.
     
-    fileName = "/Users/danielnguyen/workspace/knapsack/knapsack/inputs1a/knapsack3.input";
+    fileName = "/Users/danielnguyen/workspace/knapsack/knapsack/inputs1a/knapsack16.input";
     
     // cout << "Enter filename" << endl;
     // cin >> fileName;
