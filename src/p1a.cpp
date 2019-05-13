@@ -11,9 +11,9 @@
 
 using namespace std;
 
-#include "d_except.h"
-#include "d_matrix.h"
-#include "knapsack.h"
+#include "include/d_except.h"
+#include "include/d_matrix.h"
+#include "include/knapsack.h"
 
 int main()
 {
