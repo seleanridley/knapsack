@@ -31,17 +31,17 @@ knapsack::knapsack(ifstream &fin)
 // Construct a new knapsack instance using the data in fin.
 {
    int n, b, j, v, c;
-   
+
    fin >> n;  // read the number of objects
    fin >> b;  // read the cost limit
 
    numObjects = n;
    costLimit = b;
-   
+
    value.resize(n);
    cost.resize(n);
    selected.resize(n);
-   
+
    for (int i = 0; i < n; i++)
    {
       fin >> j >> v >> c;
@@ -58,7 +58,7 @@ knapsack::knapsack(const knapsack &k)
 // Knapsack copy constructor.
 {
    int n = k.getNumObjects();
-   
+
    value.resize(n);
    cost.resize(n);
    selected.resize(n);
@@ -95,7 +95,7 @@ int knapsack::getValue(int i) const
 {
    if (i < 0 || i >= getNumObjects())
       throw rangeError("Bad value in knapsack::getValue");
-   
+
    return value[i];
 }
 
@@ -128,7 +128,7 @@ ostream &operator<<(ostream &ostr, const knapsack &k)
 
    int totalValue = 0;
    int totalCost = 0;
-   
+
    for (int i = 0; i < k.getNumObjects(); i++)
    {
       totalValue += k.getValue(i);
@@ -207,4 +207,3 @@ bool knapsack::isSelected(int i) const
 
    return selected[i];
 }
-
